@@ -63,13 +63,13 @@ const Service = ({ service }: { service: Service }) => {
                             <div className={classes.detail__techs}>
                                 <ul>
                                     <li className={classes.detail__tech}>
-                                        <Link href=""><a><FaReact /></a></Link>
+                                        <Link href="/"><a><FaReact /></a></Link>
                                     </li>
                                     <li className={classes.detail__tech}>
-                                        <Link href=""><a><FaJs /></a></Link>
+                                        <Link href="/"><a><FaJs /></a></Link>
                                     </li>
                                     <li className={classes.detail__tech}>
-                                        <Link href=""><a><FaPython /></a></Link>
+                                        <Link href="/"><a><FaPython /></a></Link>
                                     </li>
                                 </ul>
                             </div>
@@ -110,7 +110,7 @@ const Service = ({ service }: { service: Service }) => {
 
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    const services = await axios.get('http://localhost:1337/api/services?populate=*')
+    const services = await axios.get('/services?populate=*')
 
     const paths = services.data.data.map((service: Service) => ({
         params: { slug: service.attributes.slug }
@@ -120,7 +120,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }: { params: { slug: string } }) => {
     const service = await axios.get(
-        `http://localhost:1337/api/services?filters[slug][$eq]=${params.slug}&populate=capabilities.points,capabilities.technologies,articles`
+        `/services?filters[slug][$eq]=${params.slug}&populate=capabilities.points,capabilities.technologies,articles`
     )
 
     return {

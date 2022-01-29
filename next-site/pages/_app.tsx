@@ -1,10 +1,13 @@
 import React, { SyntheticEvent, useState } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 import type { AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { MenuContext } from '../context/MenuContext'
 import '../src/scss/global.scss'
 
+
+axios.defaults.baseURL = process.env.NEXT_PUBLIC_STRAPI_HOST + '/api'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
     const [isMenu, setIsMenu] = useState(false)

@@ -21,7 +21,7 @@ const Feedback = () => {
         e.preventDefault()
         try {
             console.log(form)
-            await axios.post('http://localhost:1337/api/leads', { data: form })
+            await axios.post('/leads', { data: form })
         } catch (error) {
             alert('Something was wrong. Please try again')
         }

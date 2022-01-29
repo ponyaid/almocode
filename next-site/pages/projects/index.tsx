@@ -70,8 +70,8 @@ const Projects = ({ categories, projects }: { categories: Category[], projects: 
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const categories = await axios.get('http://localhost:1337/api/categories')
-    const projects = await axios.get('http://localhost:1337/api/projects?populate=*')
+    const categories = await axios.get('/categories')
+    const projects = await axios.get('/projects?populate=*')
 
     return {
         props: {

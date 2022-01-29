@@ -18,7 +18,7 @@ const Navbar = () => {
 
     useEffect(() => {
         (async () => {
-            const services = await axios.get(`http://localhost:1337/api/services`)
+            const services = await axios.get(`/services`)
             setServices(services.data.data)
         })()
     }, [])

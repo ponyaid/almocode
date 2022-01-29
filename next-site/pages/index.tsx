@@ -221,9 +221,9 @@ const Home = ({ services, categories, projects }: {
 
 
 export const getStaticProps: GetStaticProps = async () => {
-  const services = await axios.get('http://localhost:1337/api/services?populate=*')
-  const categories = await axios.get('http://localhost:1337/api/categories')
-  const projects = await axios.get('http://localhost:1337/api/projects?populate=*')
+  const services = await axios.get('/services?populate=*')
+  const categories = await axios.get('/categories')
+  const projects = await axios.get('/projects?populate=*')
 
   return {
     props: {

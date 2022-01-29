@@ -60,7 +60,7 @@ const About = ({ team }: { team: Team }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const team = await axios.get('http://localhost:1337/api/team?populate=teammates')
+    const team = await axios.get('/team?populate=teammates')
 
     return {
         props: {
