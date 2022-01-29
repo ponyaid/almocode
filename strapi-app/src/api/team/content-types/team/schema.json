@@ -1,0 +1,21 @@
+{
+  "kind": "singleType",
+  "collectionName": "teams",
+  "info": {
+    "singularName": "team",
+    "pluralName": "teams",
+    "displayName": "team"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "teammates": {
+      "displayName": "teammate",
+      "type": "component",
+      "repeatable": true,
+      "component": "team.teammate"
+    }
+  }
+}

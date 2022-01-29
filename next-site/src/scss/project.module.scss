@@ -1,0 +1,90 @@
+.project {
+    width: 100%;
+    gap: 2.5rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+
+    &__details {
+        grid-column: 1;
+        position: relative;
+        padding: 2.5rem 0;
+
+        @media (max-width: 1024px) {
+            padding: 0;
+            grid-column: 1 / span 3;
+        }
+    }
+
+    &__category {
+        font-size: 18px;
+        line-height: 1.45;
+        letter-spacing: 0.1px;
+        color: rgba(21, 24, 27, 0.5);
+        margin-bottom: 0.25rem;
+
+        @media (max-width: 640px) {
+            font-size: 1rem;
+        }
+    }
+
+    &__title {
+        margin-bottom: 20px;
+    }
+
+    &__tags {
+        display: flex;
+        flex-flow: wrap;
+        margin-bottom: 5rem;
+        list-style: none;
+
+        @media (max-width: 1024px) {
+            margin-bottom: 0;
+        }
+    }
+
+    &__tag {
+        font-size: 18px;
+        line-height: 1.45;
+        letter-spacing: 0.1px;
+        color: #3a54b1;
+        margin-bottom: 0.5rem;
+
+        &:not(:last-child) {
+            margin-right: 1em;
+        }
+
+        @media (max-width: 640px) {
+            font-size: 1rem;
+        }
+    }
+
+    &__arrow {
+        font-size: 3rem;
+        color: #3a54b1;
+
+        @media (max-width: 1024px) {
+            right: 0;
+            top: 28px;
+            position: absolute;
+        }
+
+        @media (max-width: 640px) {
+            font-size: 2rem;
+            top: 1.5rem;
+        }
+    }
+
+    &__cover {
+        min-height: 380px;
+        background-color: #f46564;
+        grid-column: 2 / span 3;
+
+        @media (max-width: 1024px) {
+            grid-column: 1 / span 3;
+        }
+    }
+
+    & + & {
+        margin-top: 3rem;
+    }
+}

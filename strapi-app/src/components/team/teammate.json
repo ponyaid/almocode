@@ -1,0 +1,24 @@
+{
+  "collectionName": "components_team_teammates",
+  "info": {
+    "displayName": "teammate",
+    "icon": "grin",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "position": {
+      "type": "string"
+    },
+    "avatar": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "capabilities",
+  "info": {
+    "singularName": "capability",
+    "pluralName": "capabilities",
+    "displayName": "capability",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "inversedBy": "capabilities"
+    },
+    "technologies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::technology.technology",
+      "mappedBy": "capability"
+    },
+    "points": {
+      "displayName": "point",
+      "type": "component",
+      "repeatable": true,
+      "component": "capability.point"
+    }
+  }
+}

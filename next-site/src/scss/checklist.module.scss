@@ -1,0 +1,23 @@
+.nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    &__item {
+        display: flex;
+        height: 2.5rem;
+        align-items: center;
+        padding: 0 1rem;
+        border: 1px solid rgba(21, 24, 27, 0.1);
+        border-radius: 4px;
+
+        font-size: 1rem;
+        color: #3a54b1;
+        margin-bottom: 0.5rem;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+}

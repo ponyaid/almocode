@@ -1,0 +1,36 @@
+.tablist {
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+}
+
+.tab {
+    font-size: 14px;
+    letter-spacing: 0.1px;
+    font-family: Roboto;
+    height: 2rem;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    padding: 0 12px;
+
+    color: rgba(21, 24, 27, 1);
+    background-color: rgba(21, 24, 27, 0.1);
+    margin: 0.5rem;
+    border-radius: 1rem;
+
+    &_active {
+        color: #f1f1f1;
+        background-color: rgba(21, 24, 27, 1);
+    }
+
+    &_dark {
+        color: #f1f1f1;
+        background-color: rgba(241, 241, 241, 0.1);
+    }
+
+    &_dark.tab_active {
+        color: #15181b;
+        background-color: rgba(241, 241, 241, 1);
+    }
+}

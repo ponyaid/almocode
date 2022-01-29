@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_capability_points",
+  "info": {
+    "displayName": "point",
+    "icon": "asterisk",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "text": {
+      "type": "string"
+    }
+  }
+}

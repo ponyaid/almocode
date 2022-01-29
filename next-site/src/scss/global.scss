@@ -1,0 +1,138 @@
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    background: transparent;
+}
+
+:root {
+    --background-color: #f1f1f1;
+    --color: #15181b;
+    --link-hover-color: #3a54b1;
+
+    --btn-primary-color: #3a54b1;
+    --btn-color: #f1f1f1;
+}
+
+[data-theme="dark"] {
+    --background-color: #15181b;
+    --color: #f1f1f1;
+}
+
+body {
+    font-size: 16px;
+    font-family: "Roboto";
+    color: var(--color);
+    background-color: var(--background-color);
+}
+
+::selection {
+    color: #15181b;
+    background: #f271a3;
+    text-shadow: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+h1 {
+    font-size: 72px;
+    font-weight: 500;
+
+    @media (max-width: 640px) {
+        font-size: 42px;
+    }
+}
+
+h2 {
+    font-size: 56px;
+    font-weight: 500;
+
+    @media (max-width: 640px) {
+        font-size: 42px;
+    }
+}
+
+h3 {
+    font-size: 42px;
+    font-weight: 500;
+
+    @media (max-width: 640px) {
+        font-size: 2rem;
+    }
+}
+
+h4 {
+    font-size: 1.5rem;
+    font-weight: 500;
+
+    @media (max-width: 640px) {
+        font-size: 1rem;
+    }
+}
+
+.btn,
+.icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #272a47;
+    height: 2.5rem;
+    position: relative;
+
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.8px;
+    mix-blend-mode: normal;
+    text-transform: uppercase;
+}
+
+.btn {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    color: var(--btn-primary-color);
+    border-radius: 4px;
+
+    transition: opacity 0.15s ease;
+
+    &_primary {
+        color: var(--btn-color);
+        background-color: var(--btn-primary-color);
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+
+    svg {
+        margin-left: 0.5rem;
+    }
+}
+
+@import "./pages.scss";
