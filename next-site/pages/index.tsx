@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import axios from 'axios'
@@ -7,22 +7,23 @@ import { MdOutlineEast, MdSouthEast } from 'react-icons/md'
 
 import Layout from '../components/Layout'
 import Project from '../components/Project'
-import Checklist from '../components/Checklist'
 import Tablist from '../components/Tablist'
 import { Service } from '../models/service'
+import { Capability } from '../models/capability'
 import { Project as ProjectModel } from '../models/project'
 import { Category } from '../models/category'
 import classes from '../src/scss/home.module.scss'
 
 
-
-const Home = ({ services, categories, projects }: {
+const Home = ({ services, projects, capabilities }: {
   services: Service[],
   categories: Category[],
-  projects: ProjectModel[]
+  projects: ProjectModel[],
+  capabilities: Capability[],
 }) => {
   const ref = useRef<HTMLDivElement>(null)
   const [lottie, setLottie] = useState<LottiePlayer | null>(null)
+  const [currentCapability, setCurrentCapability] = useState(0)
 
   useEffect(() => {
     import('lottie-web').then((Lottie) => setLottie(Lottie.default))
@@ -41,6 +42,10 @@ const Home = ({ services, categories, projects }: {
       return () => animation.destroy()
     }
   }, [lottie])
+
+  const tablistHandler = useCallback((index: number) => {
+    setCurrentCapability(index)
+  }, [])
 
   return (
     <Layout>
@@ -74,12 +79,18 @@ const Home = ({ services, categories, projects }: {
                 </header>
 
                 <div className={classes.industry__details}>
-                  {service.attributes.parameters?.map(parameter =>
-                    <p key={parameter.id} className={classes.industry__detail}>
-                      <span className={classes.industry__number}>{parameter.value}</span>&nbsp;
-                      <span>{parameter.key}</span>
-                    </p>
-                  )}
+                  <p className={classes.industry__detail}>
+                    <span className={classes.industry__number}>
+                      0{service.attributes.projects.data.length}
+                    </span>&nbsp;
+                    <span>Projects</span>
+                  </p>
+                  <p className={classes.industry__detail}>
+                    <span className={classes.industry__number}>
+                      0{service.attributes.capabilities.data.length}
+                    </span>&nbsp;
+                    <span>Capabilities</span>
+                  </p>
                 </div>
               </a>
             </Link>
@@ -92,9 +103,6 @@ const Home = ({ services, categories, projects }: {
           <h2 className="section__title">
             Projects
           </h2>
-          <nav className="section__nav">
-            <Checklist data={categories} />
-          </nav>
           <Link href='/projects'>
             <a className="btn section__btn">
               All projects
@@ -116,16 +124,19 @@ const Home = ({ services, categories, projects }: {
             Technologies
           </h2>
           <nav className="section__nav">
-            <Tablist theme="dark" data={[
-              'Popular', 'Front-end', 'Back-end', 'Database', 'DevOps'
-            ]} />
+            <Tablist
+              theme="dark"
+              onChange={tablistHandler}
+              data={capabilities.map(capability => capability.attributes.name)}
+            />
           </nav>
         </header>
-
         <div className={classes.technologies}>
-          {['JS', 'TypeScript', 'React', 'Redux', 'NextJS', 'Vue', 'Webpack'].map(technology =>
-            <div key={technology} className={classes.technology}>
-              <p className={classes.technology__title}>{technology}</p>
+          {capabilities[currentCapability].attributes.technologies.data.map(technology =>
+            <div key={technology.id} className={classes.technology}>
+              <p className={classes.technology__title}>
+                {technology.attributes.name}
+              </p>
               <span>
                 Show projects
                 <MdOutlineEast />
@@ -222,14 +233,14 @@ const Home = ({ services, categories, projects }: {
 
 export const getStaticProps: GetStaticProps = async () => {
   const services = await axios.get('/services?populate=*')
-  const categories = await axios.get('/categories')
   const projects = await axios.get('/projects?populate=*')
+  const capabilities = await axios.get('/capabilities?sort=updatedAt:desc&populate=*')
 
   return {
     props: {
       services: services.data.data,
-      categories: categories.data.data,
       projects: projects.data.data,
+      capabilities: capabilities.data.data,
     },
     revalidate: 60
   }

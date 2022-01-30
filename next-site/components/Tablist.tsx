@@ -1,14 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import classes from '../src/scss/tablist.module.scss'
 
 
-const Tablist = ({ theme, data }: { theme?: string, data: string[] }) => {
-    const [tab, setTab] = useState('0')
+const Tablist = ({ theme, data, onChange }: {
+    theme?: string,
+    data: string[],
+    onChange: (index: number) => void
+}) => {
+    const [currentTab, setCurrentTab] = useState(0)
 
-    const clickHandler = ((e: any) => {
-        e.preventDefault()
-        setTab(e.target.id)
-    })
+    const clickHandler = (index: number) => {
+        setCurrentTab(index)
+        onChange(index)
+    }
 
     return (
         <div className={`${classes.tablist}`}>
@@ -16,10 +20,10 @@ const Tablist = ({ theme, data }: { theme?: string, data: string[] }) => {
                 <button
                     key={index}
                     id={`${index}`}
-                    onClick={clickHandler}
+                    onClick={() => clickHandler(index)}
                     className={`${classes.tab} 
                     ${theme === 'dark' ? classes.tab_dark : ''}
-                    ${tab === `${index}` ? classes.tab_active : ''}`}>
+                    ${currentTab === index ? classes.tab_active : ''}`}>
                     {item}
                 </button>
             )}

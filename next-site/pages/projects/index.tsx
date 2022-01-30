@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { GetStaticProps } from 'next'
 import { MdOutlineEast } from 'react-icons/md'
@@ -8,9 +8,43 @@ import { Category } from '../../models/category'
 import { Project as ProjectModel } from '../../models/project'
 import Project from '../../components/Project'
 import Checklist from '../../components/Checklist'
+import { Article } from '../../models/atricle'
+import Questions from '../../components/Questions'
 
 
-const Projects = ({ categories, projects }: { categories: Category[], projects: ProjectModel[] }) => {
+const Projects = ({ categories, projects, articles }: {
+    categories: Category[],
+    projects: ProjectModel[],
+    articles: Article[]
+}) => {
+    const [filtered, setFiltered] = useState<ProjectModel[]>([])
+    const [selectedCategories, setSelectedCategories] = useState<number[]>([])
+
+    useEffect(() => {
+        if (!selectedCategories.length) {
+            return setFiltered(projects)
+        }
+
+        const updated = projects.filter(p => selectedCategories.includes(p.attributes.category.data.id))
+        setFiltered(updated)
+    }, [projects, selectedCategories])
+
+    const checklistHandler = (i?: number) => {
+        if (i === undefined) {
+            return setSelectedCategories([])
+        }
+
+        const id = categories[i].id
+        const updated = [...selectedCategories]
+        const index = updated.indexOf(id)
+        if (index === -1) {
+            setSelectedCategories([...updated, id])
+        } else {
+            updated.splice(index, 1)
+            setSelectedCategories(updated)
+        }
+    }
+
     return (
         <Layout>
             <section className="head">
@@ -26,11 +60,14 @@ const Projects = ({ categories, projects }: { categories: Category[], projects: 
             <section className="section section_border-top">
                 <header className="section__header">
                     <nav className="section__nav">
-                        <Checklist data={categories} />
+                        <Checklist
+                            onChange={checklistHandler}
+                            data={categories.map(category => category.attributes.name)}
+                        />
                     </nav>
                 </header>
                 <div>
-                    {projects.map(project =>
+                    {filtered.map(project =>
                         <Project key={project.id} project={project} />
                     )}
                 </div>
@@ -41,20 +78,7 @@ const Projects = ({ categories, projects }: { categories: Category[], projects: 
                     <h3 className="section__title">FAQ</h3>
                 </header>
 
-                <div className="faq">
-                    <div className="question">
-                        <p className="question__title">Lorem ipsum dolor sit amet.</p>
-                        <p className="question__subtitle">Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <div className="question">
-                        <p className="question__title">Lorem ipsum dolor sit amet.</p>
-                        <p className="question__subtitle">Lorem ipsum dolor sit amet.</p>
-                    </div>
-                    <div className="question">
-                        <p className="question__title">Lorem ipsum dolor sit amet.</p>
-                        <p className="question__subtitle">Lorem ipsum dolor sit amet.</p>
-                    </div>
-                </div>
+                <Questions questions={articles} />
             </section>
 
             <section className="cta">
@@ -70,11 +94,13 @@ const Projects = ({ categories, projects }: { categories: Category[], projects: 
 }
 
 export const getStaticProps: GetStaticProps = async () => {
+    const articles = await axios.get('/articles?pagination[limit]=3')
     const categories = await axios.get('/categories')
     const projects = await axios.get('/projects?populate=*')
 
     return {
         props: {
+            articles: articles.data.data,
             categories: categories.data.data,
             projects: projects.data.data,
         },

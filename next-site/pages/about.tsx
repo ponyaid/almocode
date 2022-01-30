@@ -51,7 +51,6 @@ const About = ({ team }: { team: Team }) => {
                             </div>
                         </div>
                     )}
-
                 </div>
             </section>
             <Feedback />

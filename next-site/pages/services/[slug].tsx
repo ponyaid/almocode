@@ -36,11 +36,14 @@ const Service = ({ service }: { service: Service }) => {
                 <div className="head__body">
                     <div className="head__cover">
                         <Image
-                            layout="fill"
-                            alt="cover"
-                            src="/assets/StockSnap_60M8KU6CXB.jpg"
-                            objectFit="cover"
-                            objectPosition="center top"
+                            alt="pic"
+                            src={process.env.NEXT_PUBLIC_STRAPI_HOST + service.attributes.preview.data.attributes.url}
+                            width={720}
+                            height={494}
+                            quality={60}
+                            objectFit='cover'
+                            layout='responsive'
+                            objectPosition='center top'
                         />
                     </div>
                     <div className="head__text">
@@ -120,7 +123,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }: { params: { slug: string } }) => {
     const service = await axios.get(
-        `/services?filters[slug][$eq]=${params.slug}&populate=capabilities.points,capabilities.technologies,articles`
+        `/services?filters[slug][$eq]=${params.slug}&populate=capabilities.points,capabilities.technologies,articles,preview`
     )
 
     return {

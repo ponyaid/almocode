@@ -1,5 +1,6 @@
 import { Article } from './atricle'
 import { Capability } from './capability';
+import { Project } from './project';
 
 
 export interface Service {
@@ -11,13 +12,20 @@ export interface Service {
         updatedAt: string,
         createdAt: string,
         publishedAt: string,
-        parameters: {
-            id: number,
-            key: string,
-            value: string
-        }[],
+        projects: { data: Project[] },
         capabilities: { data: Capability[] },
         articles: { data: Article[] },
-        locale: string
+        locale: string,
+
+        preview: {
+            data: {
+                attributes: {
+                    url: string,
+                    width: number,
+                    height: number,
+                    alternativeText: string,
+                }
+            }
+        }
     }
 }

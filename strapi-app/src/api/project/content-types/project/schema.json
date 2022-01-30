@@ -21,15 +21,28 @@
       "repeatable": true,
       "component": "project.tag"
     },
+    "slug": {
+      "type": "string",
+      "unique": true,
+      "required": false
+    },
+    "services": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::service.service",
+      "inversedBy": "projects"
+    },
     "category": {
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::category.category"
     },
-    "slug": {
-      "type": "string",
-      "unique": true,
-      "required": false
+    "preview": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }

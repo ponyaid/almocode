@@ -1,14 +1,41 @@
 import axios from 'axios'
+import { GetStaticProps } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import Moment from 'react-moment'
+import { useEffect, useState } from 'react'
 import { MdOutlineEast } from 'react-icons/md'
 import BackButton from '../../components/BackButton'
 import Layout from '../../components/Layout'
 import Tablist from '../../components/Tablist'
+import { Article } from '../../models/atricle'
+import { Service } from '../../models/service'
 import classes from '../../src/scss/blog.module.scss'
 
 
-const Blog = () => {
+const Blog = ({ articles, services }: {
+    articles: Article[],
+    services: Service[],
+}) => {
+    const [filtered, setFiltered] = useState<Article[]>([])
+
+    useEffect(() => {
+        setFiltered(articles)
+    }, [articles])
+
+    const tablistHandler = (value: number) => {
+        if (value === 0) {
+            return setFiltered(articles)
+        }
+        const index = value - 1
+        const updated = articles.filter(a => {
+            const arr = a.attributes.services.data.map(s => s.id)
+            return arr.includes(services[index].id)
+        })
+
+        setFiltered(updated)
+    }
+
     return (
         <Layout>
             <section className="head">
@@ -25,12 +52,15 @@ const Blog = () => {
             <section className="section section_border-top">
                 <header className="section__header">
                     <nav className="section__nav">
-                        <Tablist data={['All articles', 'One more tab', 'Something']} />
+                        <Tablist
+                            onChange={tablistHandler}
+                            data={['All articles', ...services.map(service => service.attributes.name)]}
+                        />
                     </nav>
                 </header>
                 <div className={classes.blog}>
-                    {[1, 2, 3, 4, 5, 6].map(key =>
-                        <div key={key} className={classes.blog__item}>
+                    {filtered.map(article =>
+                        <div key={article.id} className={classes.blog__item}>
                             <div className={classes.blog__itemImg}>
                                 <Image
                                     layout="fill"
@@ -41,8 +71,10 @@ const Blog = () => {
                                 />
                             </div>
                             <div className={classes.blog__itemInfo}>
-                                <span className={classes.blog__itemCategory}>Lorem</span>
-                                <p className={classes.blog__itemTitle}>Lorem ipsum dolor sit.</p>
+                                <span className={classes.blog__itemCategory}>
+                                    <Moment format='MMM DD, YYYY'>{article.attributes.createdAt}</Moment>
+                                </span>
+                                <p className={classes.blog__itemTitle}>{article.attributes.title}</p>
                                 <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente, ut!</p>
                             </div>
                         </div>
@@ -62,6 +94,20 @@ const Blog = () => {
             </section>
         </Layout>
     )
+}
+
+
+export const getStaticProps: GetStaticProps = async () => {
+    const articles = await axios.get('/articles?populate=*')
+    const services = await axios.get('/services?populate=*')
+
+    return {
+        props: {
+            articles: articles.data.data,
+            services: services.data.data
+        },
+        revalidate: 60
+    }
 }
 
 

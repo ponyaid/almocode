@@ -24,17 +24,6 @@
         }
       }
     },
-    "parameters": {
-      "displayName": "parameter",
-      "type": "component",
-      "repeatable": true,
-      "component": "service.parameter",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
-    },
     "slug": {
       "type": "string",
       "pluginOptions": {
@@ -62,6 +51,24 @@
         }
       },
       "type": "richtext"
+    },
+    "projects": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::project.project",
+      "mappedBy": "services"
+    },
+    "preview": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }

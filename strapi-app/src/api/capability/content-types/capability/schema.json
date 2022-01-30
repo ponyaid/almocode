@@ -21,17 +21,17 @@
       "target": "api::service.service",
       "inversedBy": "capabilities"
     },
-    "technologies": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::technology.technology",
-      "mappedBy": "capability"
-    },
     "points": {
       "displayName": "point",
       "type": "component",
       "repeatable": true,
       "component": "capability.point"
+    },
+    "technologies": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::technology.technology",
+      "inversedBy": "capabilities"
     }
   }
 }
