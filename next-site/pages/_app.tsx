@@ -24,7 +24,6 @@ export default function MyApp({ Component, pageProps }: AppProps) {
                     <Component {...pageProps} />
                 </ThemeProvider>
             </MenuContext.Provider>
-
         </>
     )
 }

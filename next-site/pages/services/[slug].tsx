@@ -2,10 +2,6 @@ import axios from 'axios'
 import Image from 'next/image'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import ReactMarkdown from 'react-markdown'
-import Layout from '../../components/Layout'
-import Questions from '../../components/Questions'
-import { Service } from '../../models/service'
-import classes from '../../src/scss/services.module.scss'
 import { MdOutlineEast } from 'react-icons/md'
 import {
     FaReact,
@@ -16,7 +12,28 @@ import {
     FaGithub,
     FaShopify
 } from 'react-icons/fa'
-import Link from 'next/link'
+import Layout from '../../components/Layout'
+import Questions from '../../components/Questions'
+import { Service } from '../../models/service'
+import classes from '../../src/scss/services.module.scss'
+
+
+const TechIcon = ({ tech }: { tech: string }) => {
+    if (tech.toLowerCase() === 'react')
+        return <FaReact />
+    if (tech.toLowerCase() === 'js')
+        return <FaJs />
+    if (tech.toLowerCase() === 'node')
+        return <FaNode />
+    if (tech.toLowerCase() === 'python')
+        return <FaPython />
+    if (tech.toLowerCase() === 'figma')
+        return <FaFigma />
+    if (tech.toLowerCase() === 'github')
+        return <FaGithub />
+    if (tech.toLowerCase() === 'shopify')
+        return <FaShopify />
+}
 
 
 const Service = ({ service }: { service: Service }) => {
@@ -65,15 +82,11 @@ const Service = ({ service }: { service: Service }) => {
                             <h4 className={classes.detail__title}>{capability.attributes.name}</h4>
                             <div className={classes.detail__techs}>
                                 <ul>
-                                    <li className={classes.detail__tech}>
-                                        <Link href="/"><a><FaReact /></a></Link>
-                                    </li>
-                                    <li className={classes.detail__tech}>
-                                        <Link href="/"><a><FaJs /></a></Link>
-                                    </li>
-                                    <li className={classes.detail__tech}>
-                                        <Link href="/"><a><FaPython /></a></Link>
-                                    </li>
+                                    {capability.attributes.technologies.data.map(tech =>
+                                        <li key={tech.id} className={classes.detail__tech}>
+                                            <TechIcon tech={tech.attributes.name} />
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
                             <ul className={classes.detail__list}>
@@ -93,7 +106,7 @@ const Service = ({ service }: { service: Service }) => {
 
             <section className="section">
                 <header className="section__header">
-                    <h3 className="faq__title">FAQ</h3>
+                    <h3 className="section__title">FAQ</h3>
                 </header>
 
                 <Questions questions={service.attributes.articles.data} />

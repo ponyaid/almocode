@@ -93,8 +93,8 @@ const Navbar = () => {
                     </a>
                 </Link>
                 <select className={classes.select}>
-                    <option>RU</option>
-                    <option>EN</option>
+                    <option value="ru">RU</option>
+                    <option value="en">EN</option>
                 </select>
             </nav>
             <button onClick={menuToggle} className={classes.navbar__menuBtn}>

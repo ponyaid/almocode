@@ -38,11 +38,14 @@ const About = ({ team }: { team: Team }) => {
                         <div key={teammate.id} className={classes.team__item}>
                             <div className={classes.team__pic}>
                                 <Image
-                                    alt="cover"
-                                    layout="fill"
-                                    src="/assets/team4.png"
-                                    objectFit="cover"
-                                    objectPosition="center"
+                                    alt="avatar"
+                                    src={process.env.NEXT_PUBLIC_STRAPI_HOST + teammate.avatar.data.attributes.url}
+                                    width={282}
+                                    height={282}
+                                    quality={60}
+                                    objectFit='cover'
+                                    layout='responsive'
+                                    objectPosition='center'
                                 />
                             </div>
                             <div>
@@ -59,7 +62,7 @@ const About = ({ team }: { team: Team }) => {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-    const team = await axios.get('/team?populate=teammates')
+    const team = await axios.get('/team?populate=teammates,teammates.avatar')
 
     return {
         props: {

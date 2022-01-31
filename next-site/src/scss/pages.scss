@@ -187,6 +187,8 @@
     color: inherit;
     cursor: pointer;
     padding: 1.5rem;
+    overflow: hidden;
+    position: relative;
     border: 0.5px solid rgba(21, 24, 27, 0.1);
 
     &:hover {
@@ -196,20 +198,31 @@
     &__title {
         font-size: 1.5rem;
         font-weight: 500;
-        margin-bottom: 1rem;
+        margin-bottom: 12px;
     }
 
     &__subtitle {
-        font-size: 14px;
-        color: rgba(21, 24, 27, 0.5);
+        & > * {
+            font-size: 1rem;
+            font-weight: normal;
+            line-clamp: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: rgba(21, 24, 27, 0.5);
+        }
+
+        & > *:not(:first-child) {
+            display: none;
+        }
     }
 
-    &__text {
-        display: none;
-    }
-
-    &_active &__text {
-        display: initial;
+    &__icon {
+        top: 1.5rem;
+        right: 1.5rem;
+        color: #004bc4;
+        font-size: 1.5rem;
+        position: absolute;
     }
 }
 

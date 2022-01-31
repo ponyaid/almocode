@@ -4,7 +4,14 @@ export interface Team {
         teammates: {
             id: number,
             name: string,
-            position: string
+            position: string,
+            avatar: {
+                data: {
+                    attributes: {
+                        url: string
+                    }
+                }
+            }
         }[]
     }
 }

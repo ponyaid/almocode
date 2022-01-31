@@ -1,11 +1,23 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import { FaTelegramPlane, FaInstagram, FaFacebookF } from 'react-icons/fa'
-import classes from '../src/scss/footer.module.scss'
 import { MdEmail, MdHome, MdPhone } from 'react-icons/md'
+import classes from '../src/scss/footer.module.scss'
+import { Service } from '../models/service'
 
 
 const Footer = () => {
+    const [services, setServices] = useState<Service[]>([])
+
+    useEffect(() => {
+        (async () => {
+            const services = await axios.get(`/services`)
+            setServices(services.data.data)
+        })()
+    }, [])
+
     return (
         <footer className={classes.footer}>
             <header className={classes.footer__header}>
@@ -60,21 +72,13 @@ const Footer = () => {
                 </nav>
                 <nav className={classes.footer__nav}>
                     <p className={classes.footer__title}>Services</p>
-                    <Link href={'/'}>
-                        <a className={classes.footer__navItem}>E-commerce</a>
-                    </Link>
-                    <Link href={'/'}>
-                        <a className={classes.footer__navItem}>Web sites</a>
-                    </Link>
-                    <Link href={'/'}>
-                        <a className={classes.footer__navItem}>Mobile apps</a>
-                    </Link>
-                    <Link href={'/'}>
-                        <a className={classes.footer__navItem}>Start ups</a>
-                    </Link>
-                    <Link href={'/'}>
-                        <a className={classes.footer__navItem}>UX/UI Design</a>
-                    </Link>
+                    {services.map(service =>
+                        <Link key={service.id} href={`/services/${service.attributes.slug}`}>
+                            <a className={classes.footer__navItem}>
+                                {service.attributes.name}
+                            </a>
+                        </Link>
+                    )}
                 </nav>
                 <div className={`${classes.footer__contacts}`}>
                     <p className={classes.footer__title}>Contacts</p>

@@ -1,6 +1,8 @@
 import Link from 'next/link'
+import ReactMarkdown from 'react-markdown'
 import { useEffect, useState } from 'react'
 import { Article } from '../models/atricle'
+import { MdNorthEast } from 'react-icons/md'
 
 
 const Questions = ({ questions }: { questions: Article[] }) => {
@@ -16,9 +18,16 @@ const Questions = ({ questions }: { questions: Article[] }) => {
         <div className="faq">
             {questions.map((question =>
                 <Link key={question.id} href={`/blog/${question.attributes.slug}`}>
-                    <a className={`question ${question.id === currentQuestion ? 'question_active' : ''}`}>
-                        <p className="question__title">{question.attributes.title}</p>
-                        <p className="question__subtitle">Lorem ipsum dolor sit amet.</p>
+                    <a className={`${question.id === currentQuestion ? 'question question_active' : 'question'}`}>
+                        <div>
+                            <p className="question__title">{question.attributes.title}</p>
+                            <div className="question__subtitle">
+                                <ReactMarkdown>{question.attributes.text}</ReactMarkdown>
+                            </div>
+                        </div>
+                        <MdNorthEast
+                            className="question__icon"
+                        />
                     </a>
                 </Link>
             ))}

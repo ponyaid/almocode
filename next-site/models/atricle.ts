@@ -5,8 +5,17 @@ export interface Article {
     attributes: {
         slug: string,
         title: string,
-        text?: string,
-        preview?: string,
+        text: string,
+        preview: {
+            data: {
+                attributes: {
+                    url: string,
+                    width: number,
+                    height: number,
+                    alternativeText: string,
+                }
+            }
+        },
         createdAt: string,
         services: { data: Service[] }
     }
