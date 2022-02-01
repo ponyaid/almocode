@@ -3,37 +3,11 @@ import Image from 'next/image'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import ReactMarkdown from 'react-markdown'
 import { MdOutlineEast } from 'react-icons/md'
-import {
-    FaReact,
-    FaJs,
-    FaNode,
-    FaPython,
-    FaFigma,
-    FaGithub,
-    FaShopify
-} from 'react-icons/fa'
 import Layout from '../../components/Layout'
 import Questions from '../../components/Questions'
+import TechIcon from '../../components/TechIcon'
 import { Service } from '../../models/service'
 import classes from '../../src/scss/services.module.scss'
-
-
-const TechIcon = ({ tech }: { tech: string }) => {
-    if (tech.toLowerCase() === 'react')
-        return <FaReact />
-    if (tech.toLowerCase() === 'js')
-        return <FaJs />
-    if (tech.toLowerCase() === 'node')
-        return <FaNode />
-    if (tech.toLowerCase() === 'python')
-        return <FaPython />
-    if (tech.toLowerCase() === 'figma')
-        return <FaFigma />
-    if (tech.toLowerCase() === 'github')
-        return <FaGithub />
-    if (tech.toLowerCase() === 'shopify')
-        return <FaShopify />
-}
 
 
 const Service = ({ service }: { service: Service }) => {
@@ -43,7 +17,7 @@ const Service = ({ service }: { service: Service }) => {
                 <div className="head__info head__info_col head__info_sticky">
                     <h2 className="head__title">{service.attributes.name}</h2>
                     <p className="head__desc">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, placeat velit?
+                        Send us your request for proposal, and we&apos;ll reply with the estimate.
                     </p>
                     <button className={`btn head__btn`}>
                         Get estimate

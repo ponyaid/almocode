@@ -56,11 +56,11 @@ const Home = ({ services, projects, capabilities }: {
 
         <div className={classes.head__info}>
           <h1 className={classes.head__title}>
-            SaaS application development and go to market company
+            Development company for your digital product
           </h1>
           <p className={classes.head__subtitle}>
             We are here to bring the lacking expertise and reduce operational costs for
-            your SaaS product by wrapping your core business team with reliable offshore experts
+            your SaaS product by wrapping your core business team with reliable experts
           </p>
         </div>
         <Link href="/contacts">

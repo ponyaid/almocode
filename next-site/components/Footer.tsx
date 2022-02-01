@@ -97,7 +97,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className={classes.copyright}>
-                <p>Copyright © 2021 Almocode Inc. All rights reserved.</p>
+                <p>© 2021 Almocode. All rights reserved.</p>
                 <select className={classes.select}>
                     <option value="RU">RU</option>
                     <option value="EN">EN</option>

@@ -11,6 +11,7 @@ import Tablist from '../../components/Tablist'
 import { Article } from '../../models/atricle'
 import { Service } from '../../models/service'
 import classes from '../../src/scss/blog.module.scss'
+import ReactMarkdown from 'react-markdown'
 
 
 const Blog = ({ articles, services }: {
@@ -60,24 +61,29 @@ const Blog = ({ articles, services }: {
                 </header>
                 <div className={classes.blog}>
                     {filtered.map(article =>
-                        <div key={article.id} className={classes.blog__item}>
-                            <div className={classes.blog__itemImg}>
-                                <Image
-                                    layout="fill"
-                                    alt="cover"
-                                    src="/assets/StockSnap_60M8KU6CXB.jpg"
-                                    objectFit="cover"
-                                    objectPosition="center top"
-                                />
-                            </div>
-                            <div className={classes.blog__itemInfo}>
-                                <span className={classes.blog__itemCategory}>
-                                    <Moment format='MMM DD, YYYY'>{article.attributes.createdAt}</Moment>
-                                </span>
-                                <p className={classes.blog__itemTitle}>{article.attributes.title}</p>
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sapiente, ut!</p>
-                            </div>
-                        </div>
+                        <Link key={article.id} href={`/blog/${article.attributes.slug}`}>
+                            <a className={classes.blog__item}>
+                                <div className={classes.blog__itemImg}>
+                                    <Image
+                                        layout="fill"
+                                        alt="cover"
+                                        src="/assets/StockSnap_60M8KU6CXB.jpg"
+                                        objectFit="cover"
+                                        objectPosition="center top"
+                                    />
+                                </div>
+                                <div className={classes.blog__itemInfo}>
+                                    <span className={classes.blog__itemCategory}>
+                                        <Moment format='MMM DD, YYYY'>{article.attributes.createdAt}</Moment>
+                                    </span>
+                                    <p className={classes.blog__itemTitle}>
+                                        {article.attributes.title}</p>
+                                    <div className={classes.blog__itemText}>
+                                        <ReactMarkdown>{article.attributes.text}</ReactMarkdown>
+                                    </div>
+                                </div>
+                            </a>
+                        </Link>
                     )}
                 </div>
             </section>

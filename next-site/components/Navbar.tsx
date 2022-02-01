@@ -89,7 +89,7 @@ const Navbar = () => {
             <nav className={classes.navbar__nav}>
                 <Link href={'/contacts'}>
                     <a className='btn btn_primary'>
-                        Get estimate
+                        Contact us
                     </a>
                 </Link>
                 <select className={classes.select}>

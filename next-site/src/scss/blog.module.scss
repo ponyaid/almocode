@@ -13,7 +13,7 @@
     }
 
     &__item {
-        cursor: pointer;
+        color: inherit;
         padding: 1.5rem;
         border: 0.5px solid rgba(21, 24, 27, 0.1);
 
@@ -40,5 +40,21 @@
         font-size: 1.5rem;
         font-weight: 500;
         margin-bottom: 1rem;
+    }
+
+    &__itemText {
+        & > * {
+            font-size: 1rem;
+            font-weight: normal;
+            line-clamp: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: rgba(21, 24, 27, 0.5);
+        }
+
+        & > *:not(:first-child) {
+            display: none;
+        }
     }
 }
