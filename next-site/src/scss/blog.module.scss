@@ -13,6 +13,7 @@
     }
 
     &__item {
+        overflow: hidden;
         color: inherit;
         padding: 1.5rem;
         border: 0.5px solid rgba(21, 24, 27, 0.1);
