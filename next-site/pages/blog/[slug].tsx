@@ -1,7 +1,10 @@
 import axios from 'axios'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
+import { MdAccountCircle, MdOutlineEast } from 'react-icons/md'
 import ReactMarkdown from 'react-markdown'
+import Moment from 'react-moment'
 import BackButton from '../../components/BackButton'
 import Layout from '../../components/Layout'
 import { Article } from '../../models/atricle'
@@ -10,12 +13,21 @@ import { Article } from '../../models/atricle'
 const Article = ({ article }: { article: Article }) => {
     return (
         <Layout>
-            <section className="head">
-                <div className="head__info head__info_col head__info_sticky">
+            <section className="head head_article">
+                <div className="head__info head__info_article">
                     <BackButton />
                     <h2 className="head__title">{article.attributes.title}</h2>
+                    <div className="head__meta">
+                        <MdAccountCircle />
+                        <div>
+                            <p>Diego Mustafa</p>
+                            <p className="head__metaDate">
+                                <Moment format='MMM DD, YYYY'>{article.attributes.createdAt}</Moment>
+                            </p>
+                        </div>
+                    </div>
                 </div>
-                <div className="head__body">
+                <div className="head__body head__body_article">
                     <div className="head__cover">
                         <Image
                             alt="pic"
@@ -34,6 +46,17 @@ const Article = ({ article }: { article: Article }) => {
                         </ReactMarkdown>
                     </div>
                 </div>
+            </section>
+
+            <section className="cta">
+                <p>Let’s work together.</p>
+                <p>We’d love to hear from you</p>
+                <Link href="/contacts">
+                    <a className={`btn cta__btn`}>
+                        Get in touch
+                        <MdOutlineEast />
+                    </a>
+                </Link>
             </section>
         </Layout>
     )

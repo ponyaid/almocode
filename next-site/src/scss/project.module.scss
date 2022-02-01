@@ -1,8 +1,12 @@
 .project {
     width: 100%;
-    gap: 2.5rem;
+    gap: 5rem;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+
+    @media (max-width: 1024px) {
+        gap: 2.5rem;
+    }
 
     &__details {
         grid-column: 1;
@@ -63,6 +67,7 @@
     &__arrow {
         font-size: 3rem;
         color: #3a54b1;
+        display: none;
 
         @media (max-width: 1024px) {
             right: 0;
@@ -96,6 +101,10 @@
     }
 
     & + & {
-        margin-top: 3rem;
+        margin-top: 5rem;
+
+        @media (max-width: 1024px) {
+            margin-top: 2.5rem;
+        }
     }
 }

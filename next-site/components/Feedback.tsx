@@ -34,15 +34,15 @@ const Feedback = () => {
             </p>
             <div className={classes.main__contactsWrap}>
                 <h4 className={classes.main__contactsTitle}>
-                    Contacts
+                    Contact us
                 </h4>
                 <div className={classes.main__contacts}>
                     <div className={classes.contact}>
                         <p className={classes.contact__title}>
-                            Lorem, ipsum
+                            Address
                         </p>
-                        <p>Lorem ipsum dolor sit amet.</p>
-                        <p>Lorem ipsumt amet.</p>
+                        <p>Ukraine, Kiev.</p>
+                        <p>Chokolovsky bvr., 31 </p>
                     </div>
                     <div className={classes.contact}>
                         <p className={classes.contact__title}>
