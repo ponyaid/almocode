@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import useTranslation from 'next-translate/useTranslation'
 import { FaTelegramPlane, FaInstagram, FaFacebookF } from 'react-icons/fa'
 import { MdEmail, MdHome, MdPhone } from 'react-icons/md'
 import classes from '../src/scss/footer.module.scss'
@@ -9,6 +11,8 @@ import { Service } from '../models/service'
 
 
 const Footer = () => {
+    const router = useRouter()
+    const { t } = useTranslation()
     const [services, setServices] = useState<Service[]>([])
 
     useEffect(() => {
@@ -46,7 +50,7 @@ const Footer = () => {
                 <form className={classes.searchForm}>
                     <input type="text" className={classes.searchForm__input} />
                     <button className={classes.searchForm__btn}>
-                        Search
+                        {t('common:search')}
                     </button>
                 </form>
             </header>
@@ -55,19 +59,29 @@ const Footer = () => {
                 <nav className={classes.footer__nav}>
                     <p className={classes.footer__title}>Navigation</p>
                     <Link href={'/'}>
-                        <a className={classes.footer__navItem}>Home</a>
+                        <a className={classes.footer__navItem}>
+                            {t('common:home')}
+                        </a>
                     </Link>
                     <Link href={'/projects'}>
-                        <a className={classes.footer__navItem}>All projects</a>
+                        <a className={classes.footer__navItem}>
+                            {t('common:all-projects')}
+                        </a>
                     </Link>
                     <Link href={'/about'}>
-                        <a className={classes.footer__navItem}>About for us</a>
+                        <a className={classes.footer__navItem}>
+                            {t('common:about')}
+                        </a>
                     </Link>
                     <Link href={'/blog'}>
-                        <a className={classes.footer__navItem}>Our blog</a>
+                        <a className={classes.footer__navItem}>
+                            {t('common:blog')}
+                        </a>
                     </Link>
                     <Link href={'/contacts'}>
-                        <a className={classes.footer__navItem}>Contacts</a>
+                        <a className={classes.footer__navItem}>
+                            {t('common:contact-us')}
+                        </a>
                     </Link>
                 </nav>
                 <nav className={classes.footer__nav}>
@@ -97,10 +111,21 @@ const Footer = () => {
                 </div>
             </div>
             <div className={classes.copyright}>
-                <p>© 2021 Almocode. All rights reserved.</p>
-                <select className={classes.select}>
-                    <option value="RU">RU</option>
-                    <option value="EN">EN</option>
+                <p>{t('common:copywrite')}</p>
+                <select
+                    defaultValue={router.locale}
+                    className={classes.select}
+                    onChange={e => {
+                        document.cookie = `NEXT_LOCALE=${e.target.value}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
+                        router.push(router.asPath, undefined, { locale: e.target.value })
+                    }}>
+                    {router.locales.map(locale =>
+                        <option
+                            key={locale}
+                            value={locale}>
+                            {locale}
+                        </option>
+                    )}
                 </select>
             </div>
         </footer>

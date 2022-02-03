@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextTranslate = require('next-translate')
+
+
+const nextConfig = nextTranslate({
   images: {
     domains: [
       '127.0.0.1',
@@ -11,11 +14,6 @@ const nextConfig = {
   },
 
   reactStrictMode: true,
-
-  // i18n: {
-  //   locales: ['en', 'ru'],
-  //   defaultLocale: 'en',
-  // },
-}
+})
 
 module.exports = nextConfig

@@ -9,7 +9,8 @@ import '../src/scss/global.scss'
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_STRAPI_HOST + '/api'
 
-export default function MyApp({ Component, pageProps }: AppProps) {
+
+function MyApp({ Component, pageProps }: AppProps) {
     const [isMenu, setIsMenu] = useState(false)
 
     const menuToggle = (e: SyntheticEvent) => {
@@ -32,3 +33,5 @@ MyApp.propTypes = {
     Component: PropTypes.elementType.isRequired,
     pageProps: PropTypes.object.isRequired,
 }
+
+export default MyApp

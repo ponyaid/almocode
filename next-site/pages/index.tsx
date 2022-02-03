@@ -4,7 +4,7 @@ import Link from 'next/link'
 import axios from 'axios'
 import type { LottiePlayer } from 'lottie-web'
 import { MdOutlineEast, MdSouthEast } from 'react-icons/md'
-
+import useTranslation from 'next-translate/useTranslation'
 import Layout from '../components/Layout'
 import Project from '../components/Project'
 import Tablist from '../components/Tablist'
@@ -21,6 +21,7 @@ const Home = ({ services, projects, capabilities }: {
   projects: ProjectModel[],
   capabilities: Capability[],
 }) => {
+  const { t } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
   const [lottie, setLottie] = useState<LottiePlayer | null>(null)
   const [currentCapability, setCurrentCapability] = useState(0)
@@ -156,62 +157,72 @@ const Home = ({ services, projects, capabilities }: {
               <span>01</span>
               <h3 className={classes.stage__title}>Pre-estimation</h3>
             </div>
-            <p>15 years in SaaS application development services</p>
+            <p>
+              You`ve got the initial estimation of development costs based on your spec and meet our Project team
+            </p>
+            <Link href={'/contacts'}>
+              <a className={`btn ${classes.stage__btn}`}>
+                Contact us
+                <MdOutlineEast />
+              </a>
+            </Link>
           </div>
           <div className={classes.stage}>
             <div className={classes.stage__header}>
               <span>02</span>
-              <h3 className={classes.stage__title}>Final estimation</h3>
+              <h3 className={classes.stage__title}>Final estimate</h3>
             </div>
-            <p>15 years in SaaS application development services</p>
-            <button className={`btn ${classes.stage__btn}`}>
-              Send contact
-              <MdOutlineEast />
-            </button>
+            <p>
+              You`ve got the final development cost based on our resource and time estimation and project plan including risk mitigation
+            </p>
           </div>
           <div className={classes.stage}>
             <div className={classes.stage__header}>
               <span>03</span>
-              <h3 className={classes.stage__title}>Design</h3>
+              <h3 className={classes.stage__title}>UI/UX Design</h3>
             </div>
-            <p>15 years in SaaS application development services</p>
-            <button className={`btn ${classes.stage__btn}`}>
-              Send contact
-              <MdOutlineEast />
-            </button>
+            <p>
+              We know that UI/UX design is not only about a visual picture. You will get an attractive and user-friendly design of your web or mobile interface, that is comfortable to end user
+            </p>
+            <Link href={'/projects'}>
+              <a className={`btn ${classes.stage__btn}`}>
+                Show cases
+                <MdOutlineEast />
+              </a>
+            </Link>
           </div>
           <div className={classes.stage}>
             <div className={classes.stage__header}>
               <span>04</span>
               <h3 className={classes.stage__title}>Development</h3>
             </div>
-            <p>15 years in SaaS application development services</p>
-            <button className={`btn ${classes.stage__btn}`}>
-              Send contact
-              <MdOutlineEast />
-            </button>
+            <p>
+              You meet a development team that will work on your project and we start the development process
+            </p>
+            <Link href={'/projects'}>
+              <a className={`btn ${classes.stage__btn}`}>
+                Show cases
+                <MdOutlineEast />
+              </a>
+            </Link>
           </div>
           <div className={classes.stage}>
             <div className={classes.stage__header}>
               <span>05</span>
-              <h3 className={classes.stage__title}>Manual & automatic testing</h3>
+              <h3 className={classes.stage__title}>QA Testing</h3>
             </div>
-            <p>15 years in SaaS application development services</p>
-            <button className={`btn ${classes.stage__btn}`}>
-              Send contact
-              <MdOutlineEast />
-            </button>
+            <p>
+              We make sure that all mistakes and defects are prevented and delivered solution will run smoothly and totally meet your expectations
+            </p>
           </div>
           <div className={classes.stage}>
             <div className={classes.stage__header}>
               <span>06</span>
-              <h3 className={classes.stage__title}>Support</h3>
+              <h3 className={classes.stage__title}>Support & management</h3>
             </div>
-            <p>15 years in SaaS application development services</p>
-            <button className={`btn ${classes.stage__btn}`}>
-              Send contact
-              <MdOutlineEast />
-            </button>
+            <p>
+              We guarantee the smooth delivery of your project with our experienced Project managers and advantageous combinations of the best PM tools and methodologies
+            </p>
           </div>
         </div>
       </section>
@@ -231,7 +242,7 @@ const Home = ({ services, projects, capabilities }: {
 }
 
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
   const services = await axios.get('/services?populate=*')
   const projects = await axios.get('/projects?populate=*')
   const capabilities = await axios.get('/capabilities?sort=updatedAt:desc&populate=*')

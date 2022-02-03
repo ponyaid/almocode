@@ -3,13 +3,13 @@ import axios from 'axios'
 import { GetStaticProps } from 'next'
 import { MdOutlineEast } from 'react-icons/md'
 import Layout from '../../components/Layout'
-import BackButton from '../../components/BackButton'
 import { Category } from '../../models/category'
 import { Project as ProjectModel } from '../../models/project'
 import Project from '../../components/Project'
 import Checklist from '../../components/Checklist'
 import { Article } from '../../models/atricle'
 import Questions from '../../components/Questions'
+import Link from 'next/link'
 
 
 const Projects = ({ categories, projects, articles }: {
@@ -49,11 +49,15 @@ const Projects = ({ categories, projects, articles }: {
         <Layout>
             <section className="head">
                 <div className="head__info">
-                    <BackButton />
                     <h2 className="head__title">Projects</h2>
                     <p className="head__desc">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Fuga ea voluptate minus cum ab quae at sit earum fugit nesciunt.
+                        We are proud of 50+ successfully projects all over the world
                     </p>
+                    <Link href={'/contacts'}>
+                        <a className='btn btn_primary'>
+                            Shedule a call with us
+                        </a>
+                    </Link>
                 </div>
             </section>
 

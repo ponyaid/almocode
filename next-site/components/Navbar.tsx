@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { MdMenu } from 'react-icons/md'
+import useTranslation from 'next-translate/useTranslation'
 import classes from '../src/scss/navbar.module.scss'
 import { MenuContext } from '../context/MenuContext'
 import axios from 'axios'
@@ -11,6 +12,7 @@ import { Service } from '../models/service'
 
 const Navbar = () => {
     const router = useRouter()
+    const { t } = useTranslation()
     const { menuToggle } = useContext(MenuContext)
     const [services, setServices] = useState<Service[]>([])
     const [isDropMenu, setIsDropMenu] = useState(false)
@@ -35,7 +37,6 @@ const Navbar = () => {
         }
     }, [dropMenu])
 
-
     return (
         <div className={classes.navbar}>
             <Link href={'/'}>
@@ -53,15 +54,15 @@ const Navbar = () => {
                 <ul>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/' ? classes.navbar__navItem_active : ''}`}>
-                        <Link href="/"><a >Home</a></Link>
+                        <Link href="/"><a >{t("common:home")}</a></Link>
                     </li>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/projects' ? classes.navbar__navItem_active : ''}`}>
-                        <Link href="/projects"><a>Projects</a></Link>
+                        <Link href="/projects"><a>{t("common:projects")}</a></Link>
                     </li>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/services' ? classes.navbar__navItem_active : ''}`}>
-                        <button onClick={() => setIsDropMenu(!isDropMenu)}>Services</button>
+                        <button onClick={() => setIsDropMenu(!isDropMenu)}>{t("common:services")}</button>
                         <div
                             ref={dropMenu}
                             className={`${classes.dropMenu} ${isDropMenu ? classes.dropMenu_active : ''}`}>
@@ -78,23 +79,34 @@ const Navbar = () => {
                     </li>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/about' ? classes.navbar__navItem_active : ''}`}>
-                        <Link href="/about"><a>About</a></Link>
+                        <Link href="/about"><a>{t("common:about")}</a></Link>
                     </li>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/blog' ? classes.navbar__navItem_active : ''}`}>
-                        <Link href="/blog"><a>Blog</a></Link>
+                        <Link href="/blog"><a>{t("common:blog")}</a></Link>
                     </li>
                 </ul>
             </nav>
             <nav className={classes.navbar__nav}>
                 <Link href={'/contacts'}>
                     <a className='btn btn_primary'>
-                        Contact us
+                        {t("common:contact-us")}
                     </a>
                 </Link>
-                <select className={classes.select}>
-                    <option value="ru">RU</option>
-                    <option value="en">EN</option>
+                <select
+                    defaultValue={router.locale}
+                    className={classes.select}
+                    onChange={e => {
+                        document.cookie = `NEXT_LOCALE=${e.target.value}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
+                        router.push(router.asPath, undefined, { locale: e.target.value })
+                    }}>
+                    {router.locales.map(locale =>
+                        <option
+                            key={locale}
+                            value={locale}>
+                            {locale}
+                        </option>
+                    )}
                 </select>
             </nav>
             <button onClick={menuToggle} className={classes.navbar__menuBtn}>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { GetStaticProps } from 'next'
 import Image from 'next/image'
+import useTranslation from 'next-translate/useTranslation'
 import Feedback from '../components/Feedback'
 import Layout from '../components/Layout'
 import classes from '../src/scss/about.module.scss'
@@ -8,6 +9,9 @@ import { Team } from '../models/team'
 
 
 const About = ({ team }: { team: Team }) => {
+    const { t, lang } = useTranslation()
+    console.log(lang)
+
     return (
         <Layout>
             <section className="head">

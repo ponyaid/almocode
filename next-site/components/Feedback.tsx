@@ -20,7 +20,6 @@ const Feedback = () => {
     const submit = async (e: any) => {
         e.preventDefault()
         try {
-            console.log(form)
             await axios.post('/leads', { data: form })
         } catch (error) {
             alert('Something was wrong. Please try again')
