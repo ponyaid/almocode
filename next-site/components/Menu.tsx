@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import { MdClose } from 'react-icons/md'
 import useTranslation from 'next-translate/useTranslation'
@@ -18,15 +19,18 @@ const Menu = () => {
     return (
         <div className={classes.menu}>
             <header className={classes.header}>
-                <a href='/' className={classes.logo}>
-                    <Image
-                        layout="fill"
-                        alt="almocode"
-                        src="/assets/logo.svg"
-                        objectFit="contain"
-                        objectPosition="center left"
-                    />
-                </a>
+                <Link href='/'>
+                    <a className={classes.logo}>
+                        <Image
+                            layout="fill"
+                            alt="almocode"
+                            src="/assets/logo.svg"
+                            objectFit="contain"
+                            objectPosition="center left"
+                        />
+                    </a>
+                </Link>
+
                 <button
                     onClick={menuToggle}
                     className={classes.header__closeBtn}>

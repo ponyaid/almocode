@@ -40,15 +40,18 @@ const Navbar = () => {
 
     return (
         <div className={classes.navbar}>
-            <a href='/' className={classes.logo}>
-                <Image
-                    layout="fill"
-                    alt="almocode"
-                    src="/assets/logo.svg"
-                    objectFit="contain"
-                    objectPosition="center left"
-                />
-            </a>
+            <Link href='/'>
+                <a className={classes.logo}>
+                    <Image
+                        layout="fill"
+                        alt="almocode"
+                        src="/assets/logo.svg"
+                        objectFit="contain"
+                        objectPosition="center left"
+                    />
+                </a>
+            </Link>
+
             <nav className={`${classes.navbar__nav}`}>
                 <ul>
                     <li className={`${classes.navbar__navItem} 
