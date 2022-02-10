@@ -8,11 +8,12 @@ import classes from '../src/scss/navbar.module.scss'
 import { MenuContext } from '../context/MenuContext'
 import axios from 'axios'
 import { Service } from '../models/service'
+import LanguageToggle from './LanguageToggle'
 
 
 const Navbar = () => {
     const router = useRouter()
-    const { t } = useTranslation()
+    const { t, lang } = useTranslation()
     const { menuToggle } = useContext(MenuContext)
     const [services, setServices] = useState<Service[]>([])
     const [isDropMenu, setIsDropMenu] = useState(false)
@@ -20,10 +21,10 @@ const Navbar = () => {
 
     useEffect(() => {
         (async () => {
-            const services = await axios.get(`/services`)
+            const services = await axios.get(`/services?locale=${lang}`)
             setServices(services.data.data)
         })()
-    }, [])
+    }, [lang])
 
     useEffect(() => {
         function handleClickOutside(event: any) {
@@ -39,22 +40,20 @@ const Navbar = () => {
 
     return (
         <div className={classes.navbar}>
-            <Link href={'/'}>
-                <a className={classes.logo}>
-                    <Image
-                        layout="fill"
-                        alt="almocode"
-                        src="/assets/logo.svg"
-                        objectFit="contain"
-                        objectPosition="center left"
-                    />
-                </a>
-            </Link>
+            <a href='/' className={classes.logo}>
+                <Image
+                    layout="fill"
+                    alt="almocode"
+                    src="/assets/logo.svg"
+                    objectFit="contain"
+                    objectPosition="center left"
+                />
+            </a>
             <nav className={`${classes.navbar__nav}`}>
                 <ul>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/' ? classes.navbar__navItem_active : ''}`}>
-                        <Link href="/"><a >{t("common:home")}</a></Link>
+                        <Link href="/"><a>{t("common:home")}</a></Link>
                     </li>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/projects' ? classes.navbar__navItem_active : ''}`}>
@@ -62,7 +61,9 @@ const Navbar = () => {
                     </li>
                     <li className={`${classes.navbar__navItem} 
                     ${router.pathname == '/services' ? classes.navbar__navItem_active : ''}`}>
-                        <button onClick={() => setIsDropMenu(!isDropMenu)}>{t("common:services")}</button>
+                        <button onClick={() => setIsDropMenu(!isDropMenu)}>
+                            {t("common:services")}
+                        </button>
                         <div
                             ref={dropMenu}
                             className={`${classes.dropMenu} ${isDropMenu ? classes.dropMenu_active : ''}`}>
@@ -93,23 +94,13 @@ const Navbar = () => {
                         {t("common:contact-us")}
                     </a>
                 </Link>
-                <select
-                    defaultValue={router.locale}
-                    className={classes.select}
-                    onChange={e => {
-                        document.cookie = `NEXT_LOCALE=${e.target.value}; expires=Fri, 31 Dec 9999 23:59:59 GMT`
-                        router.push(router.asPath, undefined, { locale: e.target.value })
-                    }}>
-                    {router.locales.map(locale =>
-                        <option
-                            key={locale}
-                            value={locale}>
-                            {locale}
-                        </option>
-                    )}
-                </select>
+                <div className={classes.navbar__language}>
+                    <LanguageToggle />
+                </div>
             </nav>
-            <button onClick={menuToggle} className={classes.navbar__menuBtn}>
+            <button
+                onClick={menuToggle}
+                className={classes.navbar__menuBtn}>
                 <MdMenu />
             </button>
         </div>

@@ -4,8 +4,15 @@
     "services": "Services",
     "about": "About",
     "blog": "Blog",
+    "technologies": "Technologies",
+    "capabilities": "Capabilities",
+    "stages": "Stages",
     "contact-us": "Contact us",
     "search": "Search",
     "all-projects": "All projects",
-    "copywrite": "© 2021 Almocode. All rights reserved."
+    "copywrite": "© 2021 Almocode. All rights reserved.",
+    "navigation": "Navigation",
+    "contacts": "Contacts",
+    "get-estimate": "Get estimate",
+    "see-more": "See more"
 }

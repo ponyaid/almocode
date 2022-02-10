@@ -4,8 +4,15 @@
     "services": "Сервисы",
     "about": "Про нас",
     "blog": "Блог",
+    "technologies": "Технологии",
+    "capabilities": "Возможности",
+    "stages": "Этапы",
     "contact-us": "Свяжитесь с нами",
     "search": "Поиск",
     "all-projects": "Все проекты",
-    "copywrite": "© 2021 Almocode. Все права защищены."
+    "copywrite": "© 2021 Almocode. Все права защищены.",
+    "navigation": "Навигация",
+    "contacts": "Контакты",
+    "get-estimate": "Оценить задачу",
+    "see-more": "Увидеть больше"
 }

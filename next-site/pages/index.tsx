@@ -8,18 +8,15 @@ import useTranslation from 'next-translate/useTranslation'
 import Layout from '../components/Layout'
 import Project from '../components/Project'
 import Tablist from '../components/Tablist'
-import { Service } from '../models/service'
 import { Capability } from '../models/capability'
+import { Home } from '../models/home'
 import { Project as ProjectModel } from '../models/project'
-import { Category } from '../models/category'
 import classes from '../src/scss/home.module.scss'
 
 
-const Home = ({ services, projects, capabilities }: {
-  services: Service[],
-  categories: Category[],
+const Home = ({ projects, home }: {
   projects: ProjectModel[],
-  capabilities: Capability[],
+  home: Home
 }) => {
   const { t } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
@@ -57,40 +54,43 @@ const Home = ({ services, projects, capabilities }: {
 
         <div className={classes.head__info}>
           <h1 className={classes.head__title}>
-            Development company for your digital product
+            {home.attributes.title}
           </h1>
           <p className={classes.head__subtitle}>
-            We are here to bring the lacking expertise and reduce operational costs for
-            your SaaS product by wrapping your core business team with reliable experts
+            {home.attributes.subtitle}
           </p>
         </div>
         <Link href="/contacts">
-          <a className={`btn ${classes.head__btn}`}>Get estimate</a>
+          <a className={`btn ${classes.head__btn}`}>
+            {t('common:get-estimate')}
+          </a>
         </Link>
       </section>
 
       <section className={classes.industries}>
         <div className={classes.industries__items}>
-          {services.map(service =>
-            <Link href={`/services/${service.attributes.slug}`} key={service.id}>
+          {home.attributes.services.map(service =>
+            <Link
+              key={service.base.data.id}
+              href={`/services/${service.base.data.attributes.slug}`}>
               <a className={classes.industry}>
                 <header className={classes.industry__header}>
-                  <h4>{service.attributes.name}</h4>
+                  <h4>{service.base.data.attributes.name}</h4>
                   <MdSouthEast className={classes.industry__icon} />
                 </header>
 
                 <div className={classes.industry__details}>
                   <p className={classes.industry__detail}>
                     <span className={classes.industry__number}>
-                      0{service.attributes.projects.data.length}
+                      0{service.base.data.attributes.projects.data.length}
                     </span>&nbsp;
-                    <span>Projects</span>
+                    <span>{t('common:projects')}</span>
                   </p>
                   <p className={classes.industry__detail}>
                     <span className={classes.industry__number}>
-                      0{service.attributes.capabilities.data.length}
+                      0{service.base.data.attributes.capabilities.data.length}
                     </span>&nbsp;
-                    <span>Capabilities</span>
+                    <span>{t('common:capabilities')}</span>
                   </p>
                 </div>
               </a>
@@ -102,17 +102,17 @@ const Home = ({ services, projects, capabilities }: {
       <section className="section">
         <header className="section__header">
           <h2 className="section__title">
-            Projects
+            {t('common:projects')}
           </h2>
           <Link href='/projects'>
             <a className="btn section__btn">
-              All projects
+              {t('common:see-more')}
               <MdOutlineEast />
             </a>
           </Link>
         </header>
 
-        <div >
+        <div>
           {projects.map(project =>
             <Project key={project.id} project={project} />
           )}
@@ -122,24 +122,24 @@ const Home = ({ services, projects, capabilities }: {
       <section className="section section_dark">
         <header className="section__header">
           <h2 className="section__title">
-            Technologies
+            {t('common:technologies')}
           </h2>
           <nav className="section__nav">
             <Tablist
               theme="dark"
               onChange={tablistHandler}
-              data={capabilities.map(capability => capability.attributes.name)}
+              data={home.attributes.capabilities.map(capability => capability.base.data.attributes.name)}
             />
           </nav>
         </header>
         <div className={classes.technologies}>
-          {capabilities[currentCapability].attributes.technologies.data.map(technology =>
+          {home.attributes.capabilities[currentCapability]?.base.data.attributes.technologies.data.map(technology =>
             <div key={technology.id} className={classes.technology}>
               <p className={classes.technology__title}>
                 {technology.attributes.name}
               </p>
               <span>
-                Show projects
+                {t('common:see-more')}
                 <MdOutlineEast />
               </span>
             </div>
@@ -149,7 +149,7 @@ const Home = ({ services, projects, capabilities }: {
 
       <section className="section">
         <header className="section__header">
-          <h2 className="section__title">Stages</h2>
+          <h2 className="section__title">{t('common:stages')}</h2>
         </header>
         <div className={classes.stages}>
           <div className={classes.stage}>
@@ -228,30 +228,40 @@ const Home = ({ services, projects, capabilities }: {
       </section>
 
       <section className="cta">
-        <p>Let’s work together.</p>
-        <p>We’d love to hear from you</p>
+        <p>{t('cta:title')}</p>
+        <p>{t('cta:subtitle')}</p>
         <Link href="/contacts">
           <a className={`btn cta__btn`}>
-            Get in touch
+            {t('cta:action')}
             <MdOutlineEast />
           </a>
         </Link>
       </section>
+
     </Layout>
   )
 }
 
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const services = await axios.get('/services?populate=*')
+  const querystring = require('querystring')
+
+  const homeParams = {
+    locale,
+    populate: [
+      'services.base.projects',
+      'services.base.capabilities',
+      'capabilities.base.technologies'
+    ]
+  }
+
   const projects = await axios.get('/projects?populate=*')
-  const capabilities = await axios.get('/capabilities?sort=updatedAt:desc&populate=*')
+  const home = await axios.get(`/home?${querystring.stringify(homeParams)}`)
 
   return {
     props: {
-      services: services.data.data,
       projects: projects.data.data,
-      capabilities: capabilities.data.data,
+      home: home.data.data,
     },
     revalidate: 60
   }

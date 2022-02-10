@@ -99,15 +99,10 @@
             display: none;
         }
     }
-}
 
-.select {
-    cursor: pointer;
-    font-family: Roboto;
-    font-size: 14px;
-    font-weight: 500;
-    color: rgba(21, 24, 27, 0.5);
-    text-transform: uppercase;
+    &__language {
+        color: #15181b80;
+    }
 }
 
 .dropMenu {

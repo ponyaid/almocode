@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_home_technologies",
+  "info": {
+    "displayName": "capability",
+    "icon": "bezier-curve",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "base": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::capability.capability"
+    }
+  }
+}
